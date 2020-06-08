@@ -16,8 +16,11 @@ The codebase of Wayland Project server (using RAGE MP platform).
 ### Instruction
 
 1. Clone this repository
-2. Execute `scripts/init.py` Python script (it needs to be done only once)
-3. Execute `scripts/build.py` Python script (build script)
+2. Execute `cd scripts` command
+3. Execute `python init.py` command (it needs to be done only once)
+4. Execute `python build.py` command (build script itself)
+
+**IMPORTANT NOTE!** Run these scripts only from `scripts` folder!
 
 ## Running
 
