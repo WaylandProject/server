@@ -25,3 +25,7 @@ The codebase of Wayland Project server (using RAGE MP platform).
 ## Running
 
 Simply run `ragemp-server` executable in `mp` folder
+
+## License
+
+This project is licensed under the GNU GPLv3 License - see the [LICENSE](LICENSE) file for details.
