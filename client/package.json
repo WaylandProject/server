@@ -1,0 +1,14 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ChronosX88",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/ragemp-c": "github:CocaColaBear/types-ragemp-c#master"
+  }
+}
