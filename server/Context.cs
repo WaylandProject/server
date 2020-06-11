@@ -17,6 +17,12 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Wayland {
+    public static class Context {
+        private static Auth _auth;
 
-import 'auth'
-import 'admin/fly'
+        public static void Init() {
+            _auth = new Auth();
+        }
+    }
+}

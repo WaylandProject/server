@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/ragemp-c": "github:CocaColaBear/types-ragemp-c#master"
+  },
+  "dependencies": {
+    "@types/node": "^14.0.13"
   }
 }

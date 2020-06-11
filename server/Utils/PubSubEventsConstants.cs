@@ -17,6 +17,11 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-import 'auth'
-import 'admin/fly'
+namespace Wayland.Utils {
+    public class PubSubEventsConstants {
+        public class DefaultEvents {
+            public const string OnPlayerJoin = "onPlayerJoin";
+            public const string OnServerStart = "onServerStart";
+        }
+    }
+}

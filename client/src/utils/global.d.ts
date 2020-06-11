@@ -18,5 +18,7 @@
  */
 
 
-import 'auth'
-import 'admin/fly'
+
+declare global {
+    //
+}

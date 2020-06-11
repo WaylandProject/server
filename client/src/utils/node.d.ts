@@ -17,6 +17,8 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-import 'auth'
-import 'admin/fly'
+declare namespace NodeJS {
+    interface Global {
+        //  
+    }
+}

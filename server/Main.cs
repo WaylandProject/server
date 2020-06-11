@@ -19,15 +19,33 @@
 
 using System;
 using GTANetworkAPI;
+using Wayland.Utils;
 
 namespace Wayland
 {
     public class Main : Script
 	{
 		[ServerEvent(Event.ResourceStart)]
-		public void OnResourceStart()
+		public async void OnResourceStart()
 		{
-			NAPI.Util.ConsoleOutput("Example resource loaded!");
+			Context.Init();
+			var evnt = new PubSubEvent();
+			evnt.EventName = PubSubEventsConstants.DefaultEvents.OnServerStart;
+			await PubSub.Default.PublishAsync(evnt);
+			NAPI.Util.ConsoleOutput("Wayland Project server started!");
+		}
+
+		[ServerEvent(Event.PlayerConnected)]
+		public async void OnPlayerJoin(Player player) {
+			var evnt = new PubSubEvent();
+			evnt.EventName = PubSubEventsConstants.DefaultEvents.OnPlayerJoin;
+			evnt.Payload.Add(EventPayloadConstants.Player, player);
+			await PubSub.Default.PublishAsync(evnt);
+		}
+
+		[RemoteEvent("saveCamCoords")]
+		public void SaveCameraCoords(Player player, string coords, string cameraPos, string name) {
+			Console.WriteLine($"Coords: {coords}\nCamera pos: ${cameraPos}\nName: ${name}");
 		}
 	}
 }

@@ -44,13 +44,14 @@ def build_client():
     os.chdir("../client")
     exec("tsc", True)
     exec("cd ui && ng build", True)
-    shutil.copytree("./build", "../mp/client_packages/cs", dirs_exist_ok=True)
+    shutil.copytree("./build", "../mp/client_packages", dirs_exist_ok=True)
     shutil.copytree("./ui/dist", "../mp/client_packages/ui", dirs_exist_ok=True)
     print("Client was successfully built!")
 
 def clean_server():
     shutil.rmtree("../mp/dotnet/resources", ignore_errors=True)
-    shutil.rmtree("../client/ui/dist", ignore_errors=True)
+    shutil.rmtree("../mp/client_packages", ignore_errors=True)
+    #shutil.rmtree("../client/ui/dist", ignore_errors=True)
     shutil.rmtree("../client/build", ignore_errors=True)
     print("Server was successfully cleaned!")
 

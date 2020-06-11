@@ -17,7 +17,6 @@
  along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <acl_enabled>false</acl_enabled>
   <log_console>true</log_console>

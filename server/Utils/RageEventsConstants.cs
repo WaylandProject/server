@@ -17,6 +17,10 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-import 'auth'
-import 'admin/fly'
+namespace Wayland.Utils {
+    public class RageEventsConstants {
+        public class Auth {
+            public const string ShowAuthScreen = "shauthscr";
+        }
+    }
+}

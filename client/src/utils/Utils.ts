@@ -17,6 +17,10 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+export class Utils {
+    private static readonly baseUrl = "package://ui/index.html#/"
 
-import 'auth'
-import 'admin/fly'
+    public static generateUILink(componentName: string): string {
+        return `${this.baseUrl}${componentName}`;
+    }
+}

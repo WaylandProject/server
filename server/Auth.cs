@@ -1,3 +1,4 @@
+using System;
 /**
  * Copyright (C) 2020 ChronosX88
  * 
@@ -17,6 +18,18 @@
  * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using Wayland.Utils;
+using GTANetworkAPI;
 
-import 'auth'
-import 'admin/fly'
+namespace Wayland {
+    public class Auth {
+        public Auth() {
+            PubSub.Default.Subscribe(PubSubEventsConstants.DefaultEvents.OnPlayerJoin, onPlayerJoin);
+        }
+
+        private void onPlayerJoin(PubSubEvent evnt) {
+            var player = (Player) evnt.Payload[EventPayloadConstants.Player];
+            player.TriggerEvent(RageEventsConstants.Auth.ShowAuthScreen);
+        }
+    }
+}
