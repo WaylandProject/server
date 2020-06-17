@@ -38,8 +38,8 @@ def build_server():
     shutil.copy("./Config/meta.xml", "../mp/dotnet/resources/netcoreapp3.1/meta.xml")
     shutil.copy("./Config/settings.xml", "../mp/dotnet/settings.xml")
     shutil.copy("./Config/conf.json", "../mp/conf.json")
-    if not os.path.exists("../s_config.toml"):
-        shutil.copy("./Config/s_config.sample.toml", "../s_config.toml")
+    if not os.path.exists("../mp/s_config.toml"):
+        shutil.copy("./Config/s_config.sample.toml", "../mp/s_config.toml")
     print("Server was successfully built!")
 
 def build_client():
