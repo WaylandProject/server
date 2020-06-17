@@ -20,6 +20,8 @@
 using System;
 using GTANetworkAPI;
 using Wayland.Utils;
+using Wayland.Models;
+using Nett;
 
 namespace Wayland
 {
@@ -28,11 +30,16 @@ namespace Wayland
 		[ServerEvent(Event.ResourceStart)]
 		public async void OnResourceStart()
 		{
-			Context.Init();
+			var config = ParseConfig("s_config.toml");
+			Context.Init(config);
 			var evnt = new PubSubEvent();
 			evnt.EventName = PubSubEventsConstants.DefaultEvents.OnServerStart;
 			await PubSub.Default.PublishAsync(evnt);
 			NAPI.Util.ConsoleOutput("Wayland Project server started!");
+		}
+
+		private Configuration ParseConfig(string filename) {
+			return Toml.ReadFile<Configuration>(filename);
 		}
 
 		[ServerEvent(Event.PlayerConnected)]
