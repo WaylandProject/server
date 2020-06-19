@@ -21,12 +21,28 @@ import os
 import platform
 import subprocess
 import shutil
+import sys
+import signal
+import shlex
+
 
 def exec(cmd: str, log: bool = False):
-    out = os.popen(cmd).read()
-    if log:
-        print(out)
-    
+    process = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, shell=True)
+    signal.signal(signal.SIGINT, lambda sig, frame: _stop_process(process))
+    encodings = ['utf-8', 'cp866']
+    while True:
+        line = process.stdout.readline()
+        if not line:
+            break
+        if log:
+            for e in encodings:
+                try:
+                    print(line.decode("cp866"), end='')
+                except UnicodeDecodeError:
+                    pass
+                else:
+                    break
+
 def build_server():
     cp_cmd = "cp -r"
     if platform.system() == "Windows":
@@ -34,8 +50,10 @@ def build_server():
     os.chdir("../server")
     exec("dotnet restore", True)
     exec("dotnet build", True)
-    shutil.copytree("./compiled", "../mp/dotnet/resources/", dirs_exist_ok=True)
-    shutil.copy("./Config/meta.xml", "../mp/dotnet/resources/netcoreapp3.1/meta.xml")
+    shutil.copytree("./compiled", "../mp/dotnet/resources/",
+                    dirs_exist_ok=True)
+    shutil.copy("./Config/meta.xml",
+                "../mp/dotnet/resources/netcoreapp3.1/meta.xml")
     shutil.copy("./Config/settings.xml", "../mp/dotnet/settings.xml")
     shutil.copy("./Config/conf.json", "../mp/conf.json")
     if not os.path.exists("../mp/s_config.toml"):
@@ -47,24 +65,45 @@ def build_client():
     exec("tsc", True)
     exec("cd ui && ng build", True)
     shutil.copytree("./build", "../mp/client_packages", dirs_exist_ok=True)
-    shutil.copytree("./ui/dist", "../mp/client_packages/ui", dirs_exist_ok=True)
+    shutil.copytree("./ui/dist", "../mp/client_packages/ui",
+                    dirs_exist_ok=True)
     print("Client was successfully built!")
 
 def clean_server():
     shutil.rmtree("../mp/dotnet/resources", ignore_errors=True)
     shutil.rmtree("../mp/client_packages", ignore_errors=True)
-    #shutil.rmtree("../client/ui/dist", ignore_errors=True)
+    shutil.rmtree("../client/ui/dist", ignore_errors=True)
     shutil.rmtree("../client/build", ignore_errors=True)
     print("Server was successfully cleaned!")
 
 def start_server():
+    os.chdir("../mp")
     exec_name = "ragemp-server"
     if platform.system() == "Windows":
         exec_name + ".exe"
-    subprocess.Popen(f"cd ../mp && ./{exec_name}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-    
+    exec(f"{exec_name}", True)
 
-clean_server()
-build_client()
-build_server()
+def _stop_process(process: subprocess.Popen):
+    process.send_signal(signal.CTRL_C_EVENT)
+    process.wait()
+    sys.exit(0)
 
+
+try:
+    operation = sys.argv[1]
+except IndexError:
+    clean_server()
+    build_client()
+    build_server()
+    sys.exit(0)
+
+if operation == "server":
+    build_server()
+elif operation == "client":
+    build_client()
+elif operation == "clean":
+    clean_server()
+elif operation == "start":
+    start_server()
+else:
+    print("Unknown operation! Available only following operations: server, client, clean or start (or just empty - rebuild whole server and client).")
