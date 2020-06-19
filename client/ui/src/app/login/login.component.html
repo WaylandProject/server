@@ -4,23 +4,22 @@
             <mat-card-title class="card-container-right">Авторизация</mat-card-title>
         </div>
         <mat-card-content>
-            <form class="form">
-                <table class="full-width" cellspacing="0">
-                    <tr>
-                        <td>
-                            <mat-form-field class="full-width" hideRequiredMarker>
-                                <input matInput placeholder="Логин" name="username" required>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <mat-form-field class="full-width" hideRequiredMarker>
-                                <input matInput placeholder="Пароль" type="password" name="password" required>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                </table>
+            <form class="form" [formGroup]="loginForm">
+                <mat-form-field class="full-width" hideRequiredMarker>
+                    <input matInput placeholder="Email" name="email" required formControlName="email">
+                    <mat-error *ngIf="hasError('email', 'required')">
+                        Обязательное поле
+                    </mat-error>
+                    <mat-error *ngIf="hasError('email', 'email')">
+                        Некорректный Email
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width" hideRequiredMarker>
+                    <input matInput placeholder="Пароль" type="password" name="password" required formControlName="password">
+                    <mat-error *ngIf="hasError('password', 'required')">
+                        Обязательное поле
+                    </mat-error>
+                </mat-form-field>
             </form>
         </mat-card-content>
         <mat-card-actions class="centering" style="margin-top: -15px; margin-bottom: 2px;">

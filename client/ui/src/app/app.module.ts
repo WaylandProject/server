@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,7 +49,8 @@ const routes: Routes = [
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
