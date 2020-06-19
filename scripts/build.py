@@ -83,11 +83,14 @@ def start_server():
         exec_name + ".exe"
     exec(f"{exec_name}", True)
 
+def start_ui_dev():
+    os.chdir("../client/ui")
+    exec("ng serve", True)
+
 def _stop_process(process: subprocess.Popen):
     process.send_signal(signal.CTRL_C_EVENT)
     process.wait()
     sys.exit(0)
-
 
 try:
     operation = sys.argv[1]
@@ -105,5 +108,7 @@ elif operation == "clean":
     clean_server()
 elif operation == "start":
     start_server()
+elif operation == "ui_dev":
+    start_ui_dev()
 else:
-    print("Unknown operation! Available only following operations: server, client, clean or start (or just empty - rebuild whole server and client).")
+    print("Unknown operation! Available only following operations: server, client, clean, ui_dev or start (or just empty - rebuild whole server and client).")
