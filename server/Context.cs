@@ -1,6 +1,3 @@
-
-
-using Wayland.Models;
 /**
 * Copyright (C) 2020 ChronosX88
 * 
@@ -19,14 +16,41 @@ using Wayland.Models;
 * You should have received a copy of the GNU General Public License
 * along with Wayland Project Server.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Wayland {
-    public static class Context {
+
+using System;
+using MongoDB.Driver;
+using Wayland.Models;
+
+namespace Wayland
+{
+    // Context is a static class which holds all global objects for using in other classes
+    public static class Context
+    {
         private static Auth _auth;
         private static Configuration _config;
+        public static IMongoDatabase MongoDB { get; private set; }
 
-        public static void Init(Configuration config) {
+        public static void Init(Configuration config)
+        {
             _config = config;
             _auth = new Auth();
+            MongoDB = initMongoClient(config);
+        }
+
+        private static IMongoDatabase initMongoClient(Configuration config)
+        {
+            MongoClient client;
+            if (config.MongoDB.User == "" && config.MongoDB.Password == "")
+            {
+                client = new MongoClient($"mongodb://{config.MongoDB.Host}:{config.MongoDB.Port}");
+            }
+            else
+            {
+                client = new MongoClient($"mongodb://{config.MongoDB.User}:{config.MongoDB.Password}@{config.MongoDB.Host}:{config.MongoDB.Port}");
+            }
+            
+            var db = client.GetDatabase($"{config.MongoDB.DatabaseName}");
+            return db;
         }
     }
 }
