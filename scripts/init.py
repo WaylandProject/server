@@ -22,7 +22,7 @@ import platform
 import urllib.request
 from zipfile import ZipFile 
 import shutil
-from scripts.build import exec
+from _exec import exec
 
 blobsVersion = "v1.1"
 mpLinuxURL = f"https://github.com/WaylandProject/ragemp-blobs/releases/download/{blobsVersion}/rage-server-linux.tar.gz"
